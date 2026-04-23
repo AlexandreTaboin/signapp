@@ -1,0 +1,99 @@
+/* /assets/css/style.css */
+* { box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f6f8fa;
+    color: #24292f;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+h1, h2, h3 { color: #24292f; }
+
+/* === Boutons === */
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s;
+    font-family: inherit;
+}
+.btn-primary { background: #0969da; color: white; }
+.btn-primary:hover:not(:disabled) { background: #0550ae; }
+.btn-primary:disabled { background: #a0b4cc; cursor: not-allowed; }
+.btn-success { background: #1a7f37; color: white; }
+.btn-success:hover { background: #116329; }
+.btn-ghost { background: #f6f8fa; color: #24292f; border: 1px solid #d0d7de; }
+.btn-ghost:hover { background: #eaeef2; }
+
+/* === Top bar === */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    background: #24292f;
+    color: white;
+}
+.top-bar h1 { margin: 0; font-size: 18px; color: white; }
+.user-info { display: flex; align-items: center; gap: 14px; font-size: 14px; }
+.user-info .btn { padding: 6px 14px; font-size: 13px; }
+
+/* === Alertes === */
+.alert {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 12px 0;
+    font-size: 14px;
+}
+.alert-error { background: #ffebe9; color: #82071e; border: 1px solid #ffcecb; }
+.alert-warning { background: #fff8c5; color: #7d4e00; border: 1px solid #eac54f; }
+.alert-success { background: #dafbe1; color: #116329; border: 1px solid #aceebb; }
+
+/* === Statut messages === */
+.status-msg { margin-top: 10px; font-size: 14px; min-height: 20px; }
+.status-msg.info { color: #0969da; }
+.status-msg.success { color: #1a7f37; }
+.status-msg.error { color: #cf222e; }
+
+/* === Page de connexion === */
+.login-body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0969da 0%, #24292f 100%);
+}
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 400px;
+}
+.login-box h1 { margin: 0 0 6px; font-size: 24px; text-align: center; }
+.login-box .subtitle { margin: 0 0 24px; text-align: center; color: #57606a; }
+.login-box label { display: block; margin-bottom: 14px; font-weight: 600; font-size: 14px; }
+.login-box input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+.login-box input:focus { outline: none; border-color: #0969da; box-shadow: 0 0 0 3px rgba(9,105,218,0.2); }
+.login-box .btn { width: 100%; margin-top: 10px; padding: 12px; font-size: 16px; }
+
+.help { color: #57606a; font-size: 14px; }
+.hidden { display: none !important; }

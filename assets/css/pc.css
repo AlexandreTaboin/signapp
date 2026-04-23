@@ -1,0 +1,138 @@
+/* /assets/css/pc.css */
+.container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.card h2 { margin-top: 0; color: #2c3e50; }
+.hidden { display: none !important; }
+
+.form-row { margin: 16px 0; }
+.form-row label { display: block; font-weight: 600; margin-bottom: 6px; }
+.form-row-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 16px 0;
+}
+fieldset { border: 1px solid #d0d7de; padding: 12px 16px; border-radius: 6px; }
+fieldset legend { font-weight: 700; padding: 0 6px; color: #0969da; }
+fieldset label { display: block; margin: 8px 0; font-size: 14px; }
+fieldset input { width: 100%; padding: 8px; border: 1px solid #d0d7de; border-radius: 4px; box-sizing: border-box; }
+
+input[type="file"] { padding: 8px; border: 1px dashed #d0d7de; background: #f6f8fa; border-radius: 4px; }
+
+.person-selector { display: flex; gap: 12px; margin-bottom: 16px; }
+.person-btn {
+    padding: 10px 18px;
+    border: 2px solid #d0d7de;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.person-btn.active { border-color: #0969da; background: #ddf4ff; color: #0969da; }
+
+.pdf-pages { display: flex; flex-direction: column; gap: 24px; }
+.pdf-page-wrap { border: 1px solid #d0d7de; border-radius: 6px; overflow: hidden; background: #f6f8fa; }
+.page-title { padding: 6px 12px; background: #eaeef2; font-size: 13px; color: #57606a; font-weight: 600; }
+.pdf-page { position: relative; background: #fff; cursor: crosshair; }
+
+.sig-zone {
+    border: 3px dashed #0969da;
+    background: rgba(9,105,218,0.15);
+    color: #0969da;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px;
+    box-sizing: border-box;
+    pointer-events: none;
+    border-radius: 4px;
+}
+.sig-zone-p2 { border-color: #bf8700; background: rgba(191,135,0,0.15); color: #bf8700; }
+
+.actions-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+
+.tracking-box { padding: 16px 0; }
+.status-indicator {
+    padding: 16px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.status-indicator.waiting { background: #fff8c5; color: #7d4e00; }
+.status-indicator.pending { background: #ffe4a3; color: #7d4e00; }
+.status-indicator.success { background: #dafbe1; color: #116329; }
+
+.signatures-progress { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.sig-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #f6f8fa;
+    border-radius: 6px;
+}
+.sig-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #d0d7de; flex-shrink: 0;
+}
+.sig-item.signed .sig-dot { background: #1a7f37; }
+.sig-item.signed { background: #dafbe1; }
+.sig-name { flex: 1; font-weight: 600; }
+.sig-state { font-size: 14px; color: #57606a; }
+.sig-item.signed .sig-state { color: #116329; font-weight: 700; }
+/* ===== Suivi multi-documents ===== */
+.tracking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tracked-doc {
+    background: #fff;
+    border: 2px solid #d0d7de;
+    border-radius: 8px;
+    padding: 16px 20px;
+    transition: border-color 0.2s;
+}
+.tracked-doc.success { border-color: #1a7f37; background: #f0fff4; }
+.tracked-doc.pending { border-color: #bf8700; background: #fffbeb; }
+
+.tracked-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.tracked-title { font-weight: 700; font-size: 16px; color: #24292f; }
+.tracked-status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.status-waiting { background: #fff8c5; color: #7d4e00; }
+.status-pending { background: #ffe4a3; color: #7d4e00; }
+.status-success { background: #dafbe1; color: #116329; }
+
+.tracked-signers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.btn-dl { width: 100%; margin-top: 8px; }
