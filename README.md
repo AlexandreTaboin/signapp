@@ -446,5 +446,5 @@ Développé pour un usage interne. Contributions bienvenues.
 
 ---
 
-*Dernière mise à jour : 2025*
+*Dernière mise à jour : Avril 2026*
 
