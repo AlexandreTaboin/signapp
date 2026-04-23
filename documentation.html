@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Documentation — Signature Électronique</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --primary: #0969da;
+  --primary-dark: #0550ae;
+  --bg: #f6f8fa;
+  --card: #ffffff;
+  --text: #24292f;
+  --muted: #57606a;
+  --border: #d0d7de;
+  --code-bg: #1e1e1e;
+  --code-text: #d4d4d4;
+  --success: #1a7f37;
+  --warning: #bf8700;
+  --danger: #cf222e;
+  --sidebar-w: 280px;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  margin: 0; background: var(--bg); color: var(--text); line-height: 1.6;
+}
+/* Layout */
+.layout { display: flex; min-height: 100vh; }
+aside.sidebar {
+  width: var(--sidebar-w); background: #24292f; color: #fff;
+  position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto;
+  padding: 24px 18px;
+}
+aside.sidebar h1 { font-size: 18px; margin: 0 0 4px; color: #fff; }
+aside.sidebar .subtitle { color: #8b949e; font-size: 13px; margin-bottom: 20px; }
+aside.sidebar nav ul { list-style: none; padding: 0; margin: 0; }
+aside.sidebar nav > ul > li { margin-bottom: 4px; }
+aside.sidebar nav a {
+  display: block; padding: 6px 10px; color: #c9d1d9;
+  text-decoration: none; border-radius: 4px; font-size: 14px;
+}
+aside.sidebar nav a:hover { background: #30363d; color: #fff; }
+aside.sidebar nav .section-title {
+  font-size: 11px; text-transform: uppercase; color: #8b949e;
+  padding: 14px 10px 6px; letter-spacing: 0.5px;
+}
+aside.sidebar nav ul ul a { padding-left: 22px; font-size: 13px; }
+
+main {
+  margin-left: var(--sidebar-w);
+  padding: 40px 50px; max-width: 1100px; width: calc(100% - var(--sidebar-w));
+}
+
+/* Typo */
+h1, h2, h3, h4 { color: var(--text); }
+h2 {
+  border-bottom: 2px solid var(--border); padding-bottom: 10px;
+  margin-top: 50px; font-size: 26px;
+}
+h3 { margin-top: 32px; font-size: 20px; color: var(--primary-dark); }
+h4 { margin-top: 20px; font-size: 16px; color: var(--muted); }
+
+/* Cards */
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 20px 24px; margin: 16px 0;
+}
+.card.info { border-left: 4px solid var(--primary); }
+.card.warn { border-left: 4px solid var(--warning); background: #fffbeb; }
+.card.danger { border-left: 4px solid var(--danger); background: #fff5f5; }
+.card.success { border-left: 4px solid var(--success); background: #f0fff4; }
+
+/* Badges */
+.badge {
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 12px; font-weight: 600; margin-right: 6px;
+}
+.badge-get { background: #ddf4ff; color: #0969da; }
+.badge-post { background: #dafbe1; color: #116329; }
+.badge-php { background: #8993be; color: #fff; }
+.badge-js { background: #f1e05a; color: #000; }
+.badge-css { background: #563d7c; color: #fff; }
+.badge-html { background: #e34c26; color: #fff; }
+.badge-auth { background: #fff8c5; color: #7d4e00; }
+
+/* Code */
+pre {
+  background: var(--code-bg); color: var(--code-text);
+  padding: 14px 18px; border-radius: 6px;
+  overflow-x: auto; font-size: 13px; line-height: 1.5;
+  font-family: "Fira Code", Consolas, Monaco, monospace;
+}
+code { font-family: "Fira Code", Consolas, Monaco, monospace; font-size: 0.92em; }
+:not(pre) > code {
+  background: #eef1f4; color: #24292f; padding: 2px 6px;
+  border-radius: 3px; font-size: 0.88em;
+}
+.kw { color: #569cd6; }
+.str { color: #ce9178; }
+.com { color: #6a9955; font-style: italic; }
+.fn { color: #dcdcaa; }
+.num { color: #b5cea8; }
+
+/* Tables */
+table {
+  width: 100%; border-collapse: collapse; margin: 16px 0;
+  background: #fff; border-radius: 6px; overflow: hidden;
+}
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: #f6f8fa; font-size: 13px; text-transform: uppercase; color: var(--muted); }
+td code { font-size: 0.9em; }
+
+/* Flow diagram */
+.flow {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  margin: 20px 0; padding: 20px; background: #fff;
+  border: 1px solid var(--border); border-radius: 8px;
+}
+.flow-step {
+  background: var(--primary); color: #fff; padding: 10px 16px;
+  border-radius: 6px; font-weight: 600; font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.flow-step.tablet { background: #bf8700; }
+.flow-step.done { background: var(--success); }
+.flow-arrow { color: var(--muted); font-size: 22px; font-weight: 700; }
+
+/* Status diagram */
+.status-chain {
+  display: flex; flex-direction: column; gap: 0; margin: 20px 0;
+}
+.status-node {
+  background: #fff; border: 2px solid var(--border); padding: 12px 18px;
+  border-radius: 6px; position: relative; margin-left: 20px;
+}
+.status-node::before {
+  content: ""; position: absolute; left: -20px; top: 50%;
+  width: 15px; height: 2px; background: var(--border);
+}
+.status-node.current { border-color: var(--primary); background: #ddf4ff; }
+.status-node .name { font-weight: 700; font-family: monospace; color: var(--primary); }
+.status-node .desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.status-arrow { text-align: center; color: var(--muted); margin: 4px 0; font-size: 18px; }
+
+/* Scroll spy highlight */
+.anchor { scroll-margin-top: 20px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  aside.sidebar { position: static; width: 100%; height: auto; }
+  main { margin-left: 0; width: 100%; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+  <h1>📄 Signature App</h1>
+  <div class="subtitle">Documentation technique</div>
+  <nav>
+    <ul>
+      <li><a href="#intro">🚀 Introduction</a></li>
+      <li><a href="#archi">🏗️ Architecture</a></li>
+      <li><a href="#lifecycle">🔄 Cycle de vie d'un document</a></li>
+      <li><a href="#data">📦 Structure de données</a></li>
+      <li><a href="#security">🔒 Sécurité</a></li>
+
+      <div class="section-title">Backend (PHP)</div>
+      <li><a href="#config">config/config.php</a></li>
+      <li><a href="#router">index.php / login / logout</a></li>
+      <li><a href="#api-upload">api/upload.php</a></li>
+      <li><a href="#api-preview">api/preview.php</a></li>
+      <li><a href="#api-set-zones">api/set_zones.php</a></li>
+      <li><a href="#api-send">api/send_to_tablet.php</a></li>
+      <li><a href="#api-status">api/status.php</a></li>
+      <li><a href="#api-sign">api/sign.php</a></li>
+      <li><a href="#api-download">api/download.php</a></li>
+      <li><a href="#cleanup">cleanup.php</a></li>
+
+      <div class="section-title">Frontend</div>
+      <li><a href="#pc-view">pc/index.php</a></li>
+      <li><a href="#tablet-view">tablet/index.php</a></li>
+      <li><a href="#pc-js">assets/js/pc.js</a></li>
+      <li><a href="#tablet-js">assets/js/tablet.js</a></li>
+      <li><a href="#sig-canvas">assets/js/signature_canvas.js</a></li>
+
+      <div class="section-title">Annexes</div>
+      <li><a href="#sequence">📊 Diagrammes</a></li>
+      <li><a href="#troubleshoot">🔧 Dépannage</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<main>
+
+<!-- ================================================================= -->
+<h1 id="intro" class="anchor">📄 Application Signature Électronique</h1>
+<p class="subtitle" style="font-size:18px;color:var(--muted);">
+  Documentation technique complète — fonctionnement, architecture et référence du code.
+</p>
+
+<div class="card info">
+<strong>🎯 Objectif de l'application</strong><br>
+Permettre à un <b>gestionnaire (PC)</b> de téléverser un PDF, d'y placer deux zones de signature (une par signataire), puis de l'envoyer à une <b>tablette</b> où les deux personnes signent à la main. Le serveur génère alors automatiquement un PDF final incrustant les signatures, téléchargeable par le gestionnaire.
+</div>
+
+<h3>Stack technique</h3>
+<table>
+  <tr><th>Composant</th><th>Technologie</th></tr>
+  <tr><td>Backend</td><td>PHP 8.2+ (sans framework)</td></tr>
+  <tr><td>Stockage</td><td>Fichiers JSON (une session = un document)</td></tr>
+  <tr><td>Génération PDF</td><td>TCPDF + FPDI</td></tr>
+  <tr><td>Conversion PDF→PNG</td><td>Ghostscript + pdfinfo (poppler-utils)</td></tr>
+  <tr><td>Frontend PC</td><td>HTML/CSS/JS vanilla</td></tr>
+  <tr><td>Frontend tablette</td><td>HTML/CSS/JS + Canvas tactile</td></tr>
+  <tr><td>Serveur web</td><td>Nginx + PHP-FPM (ou Apache)</td></tr>
+</table>
+
+<!-- ================================================================= -->
+<h2 id="archi" class="anchor">🏗️ Architecture générale</h2>
+
+<div class="flow">
+  <div class="flow-step">👨‍💼 PC (navigateur)</div>
+  <div class="flow-arrow">⇄</div>
+  <div class="flow-step" style="background:#24292f">🖥️ Serveur PHP</div>
+  <div class="flow-arrow">⇄</div>
+  <div class="flow-step tablet">📱 Tablette</div>
+</div>
+
+<h3>Arborescence du projet</h3>
+<pre><code>/raid/signature/
+├── <span class="kw">config/</span>
+│   └── config.php          <span class="com"># Config centrale + fonctions utilitaires</span>
+├── <span class="kw">api/</span>                    <span class="com"># Endpoints JSON</span>
+│   ├── upload.php          <span class="com"># Upload PDF (PC)</span>
+│   ├── preview.php         <span class="com"># Servir images de prévisualisation</span>
+│   ├── set_zones.php       <span class="com"># Placement des zones (PC)</span>
+│   ├── send_to_tablet.php  <span class="com"># Envoi à la tablette (PC)</span>
+│   ├── status.php          <span class="com"># Suivi (PC + tablette)</span>
+│   ├── sign.php            <span class="com"># Réception signature (tablette)</span>
+│   └── download.php        <span class="com"># Téléchargement PDF final (PC)</span>
+├── <span class="kw">pc/</span>
+│   └── index.php           <span class="com"># Dashboard gestionnaire</span>
+├── <span class="kw">tablet/</span>
+│   └── index.php           <span class="com"># UI tablette</span>
+├── <span class="kw">assets/</span>
+│   ├── css/                <span class="com"># style.css, pc.css, tablet.css</span>
+│   └── js/                 <span class="com"># pc.js, tablet.js, signature_canvas.js</span>
+├── <span class="kw">storage/</span>                <span class="com"># Données (non servi par le web)</span>
+│   ├── pdf/                <span class="com"># PDF sources uploadés</span>
+│   ├── previews/{doc_id}/  <span class="com"># PNG des pages</span>
+│   ├── signatures/         <span class="com"># PNG des signatures</span>
+│   ├── sessions/           <span class="com"># JSON (état de chaque doc)</span>
+│   ├── final/              <span class="com"># PDF signés finaux</span>
+│   └── php_sessions/       <span class="com"># Sessions PHP</span>
+├── <span class="kw">libs/</span>
+│   ├── tcpdf/              <span class="com"># Génération PDF</span>
+│   └── FPDI/               <span class="com"># Import pages de PDF existants</span>
+├── index.php               <span class="com"># Routeur : redirige selon rôle</span>
+├── login.php               <span class="com"># Page de connexion</span>
+├── logout.php
+└── cleanup.php             <span class="com"># Script cron de nettoyage</span>
+</code></pre>
+
+<h3>Principes clés</h3>
+<ul>
+  <li><b>Pas de base de données</b> : chaque document est un fichier JSON <code>storage/sessions/{doc_id}.json</code>.</li>
+  <li><b>Deux rôles</b> : <code>pc</code> (gestionnaire) et <code>tablet</code> (signataire), stockés en session PHP.</li>
+  <li><b>Protection CSRF</b> sur toutes les mutations (POST).</li>
+  <li><b>Polling</b> (toutes les 3 sec) côté PC et tablette pour synchroniser l'état.</li>
+  <li><b>Nettoyage automatique</b> : cron quotidien + nettoyage opportuniste (1/20 requêtes).</li>
+</ul>
+
+<!-- ================================================================= -->
+<h2 id="lifecycle" class="anchor">🔄 Cycle de vie d'un document</h2>
+
+<p>Chaque document passe par plusieurs <b>statuts</b> stockés dans son JSON :</p>
+
+<div class="status-chain">
+  <div class="status-node">
+    <div class="name">draft</div>
+    <div class="desc">Juste uploadé. Le PC place les zones de signature. Supprimé après 24h si abandonné.</div>
+  </div>
+  <div class="status-arrow">↓</div>
+  <div class="status-node">
+    <div class="name">zones_placed</div>
+    <div class="desc">Les 2 zones sont définies. En attente d'envoi à la tablette.</div>
+  </div>
+  <div class="status-arrow">↓</div>
+  <div class="status-node current">
+    <div class="name">waiting_signatures</div>
+    <div class="desc">Visible sur la tablette, aucune signature encore.</div>
+  </div>
+  <div class="status-arrow">↓</div>
+  <div class="status-node">
+    <div class="name">signed_by_1</div>
+    <div class="desc">Une personne a signé (pas forcément la P1). En attente du 2e.</div>
+  </div>
+  <div class="status-arrow">↓</div>
+  <div class="status-node">
+    <div class="name">completed</div>
+    <div class="desc">Les 2 ont signé. Le PDF final est généré. Le PC peut le télécharger.</div>
+  </div>
+</div>
+
+<div class="card warn">
+<strong>⚠️ Nettoyage automatique</strong>
+<ul>
+<li><b>draft &gt; 24h</b> → supprimé entièrement</li>
+<li><b>completed téléchargé</b> → cache effacé (PDF source, previews, PNG signatures) mais JSON + PDF final conservés</li>
+<li><b>completed &gt; 30 jours</b> → tout supprimé, y compris PDF final</li>
+</ul>
+</div>
+
+<!-- ================================================================= -->
+<h2 id="data" class="anchor">📦 Structure de données</h2>
+
+<h3>Fichier JSON d'un document (<code>storage/sessions/{doc_id}.json</code>)</h3>
+<pre><code>{
+  <span class="str">"doc_id"</span>: <span class="str">"a3f2b8c1..."</span>,              <span class="com">// 32 chars hex, identifiant unique</span>
+  <span class="str">"created_at"</span>: <span class="num">1730912345</span>,
+  <span class="str">"created_by"</span>: <span class="str">"gestionnaire"</span>,
+  <span class="str">"status"</span>: <span class="str">"waiting_signatures"</span>,       <span class="com">// draft|zones_placed|waiting_signatures|signed_by_1|completed</span>
+  <span class="str">"original_filename"</span>: <span class="str">"contrat.pdf"</span>,
+
+  <span class="com">// Identité des 2 signataires</span>
+  <span class="str">"p1_firstname"</span>: <span class="str">"Jean"</span>,
+  <span class="str">"p1_lastname"</span>:  <span class="str">"Dupont"</span>,
+  <span class="str">"p1_label"</span>:     <span class="str">"Jean Dupont"</span>,
+  <span class="str">"p2_firstname"</span>: <span class="str">"Marie"</span>,
+  <span class="str">"p2_lastname"</span>:  <span class="str">"Martin"</span>,
+  <span class="str">"p2_label"</span>:     <span class="str">"Marie Martin"</span>,
+
+  <span class="com">// Dimensions de chaque page (en pixels, issues du PNG)</span>
+  <span class="str">"pages"</span>: [
+    { <span class="str">"num"</span>: <span class="num">1</span>, <span class="str">"width"</span>: <span class="num">992</span>, <span class="str">"height"</span>: <span class="num">1403</span> },
+    { <span class="str">"num"</span>: <span class="num">2</span>, <span class="str">"width"</span>: <span class="num">992</span>, <span class="str">"height"</span>: <span class="num">1403</span> }
+  ],
+
+  <span class="com">// Zones de signature (coordonnées RELATIVES 0..1)</span>
+  <span class="str">"zones"</span>: [
+    {
+      <span class="str">"person"</span>: <span class="num">1</span>,           <span class="com">// 1 ou 2</span>
+      <span class="str">"page"</span>:   <span class="num">2</span>,           <span class="com">// numéro de page</span>
+      <span class="str">"rel_x"</span>:  <span class="num">0.12</span>,        <span class="com">// position x (0=gauche, 1=droite)</span>
+      <span class="str">"rel_y"</span>:  <span class="num">0.78</span>,        <span class="com">// position y (0=haut, 1=bas)</span>
+      <span class="str">"rel_w"</span>:  <span class="num">0.20</span>,        <span class="com">// largeur (fraction de la page)</span>
+      <span class="str">"rel_h"</span>:  <span class="num">0.07</span>,
+      <span class="str">"label"</span>:  <span class="str">"Jean Dupont"</span>
+    }
+  ],
+
+  <span class="com">// État des signatures</span>
+  <span class="str">"signed_1"</span>: <span class="kw">true</span>,
+  <span class="str">"signed_2"</span>: <span class="kw">false</span>,
+  <span class="str">"signature_1_file"</span>: <span class="str">"a3f2b8c1_p1.png"</span>,
+  <span class="str">"signature_2_file"</span>: <span class="kw">null</span>,
+  <span class="str">"signed_1_at"</span>: <span class="num">1730913000</span>,
+
+  <span class="com">// Finalisation</span>
+  <span class="str">"sent_at"</span>:      <span class="num">1730912500</span>,
+  <span class="str">"completed_at"</span>: <span class="kw">null</span>,
+  <span class="str">"final_pdf"</span>:    <span class="kw">null</span>,       <span class="com">// nom du fichier dans storage/final/</span>
+  <span class="str">"downloaded_at"</span>: <span class="kw">null</span>,
+  <span class="str">"cache_cleaned"</span>: <span class="kw">false</span>
+}
+</code></pre>
+
+<div class="card info">
+<strong>💡 Pourquoi des coordonnées relatives ?</strong><br>
+Le PDF et son PNG de preview n'ont pas les mêmes dimensions. Utiliser des ratios (0..1) permet de calculer les positions sur n'importe quelle représentation (PNG pour l'affichage, millimètres pour le PDF final).
+</div>
+
+<!-- ================================================================= -->
+<h2 id="security" class="anchor">🔒 Sécurité</h2>
+
+<h3>Mécanismes en place</h3>
+<table>
+<tr><th>Mécanisme</th><th>Où</th><th>Détail</th></tr>
+<tr><td>Authentification</td><td><code>login.php</code></td><td><code>password_hash()</code> bcrypt + <code>password_verify()</code></td></tr>
+<tr><td>Sessions</td><td><code>config.php</code></td><td>Cookie <code>httponly</code>, <code>SameSite=Strict</code>, <code>secure</code> si HTTPS, nom personnalisé <code>SIGNAPP_SESSID</code></td></tr>
+<tr><td>CSRF</td><td>Toutes les mutations POST</td><td>Token aléatoire 32 bytes, vérifié avec <code>hash_equals()</code></td></tr>
+<tr><td>Role-based access</td><td><code>require_role()</code></td><td>Bloque l'accès croisé PC↔tablette</td></tr>
+<tr><td>Validation upload</td><td><code>upload.php</code></td><td>MIME + magic bytes <code>%PDF-</code> + taille max 10 Mo</td></tr>
+<tr><td>Validation ID</td><td><code>load_document()</code></td><td>Regex <code>[a-f0-9]{32}</code> uniquement</td></tr>
+<tr><td>Verrouillage fichiers</td><td><code>load/save_document()</code></td><td><code>flock()</code> partagé/exclusif pour éviter race conditions</td></tr>
+<tr><td>Anti brute-force</td><td><code>login.php</code></td><td><code>usleep(500000)</code> en cas d'échec</td></tr>
+<tr><td>Headers HTTP</td><td><code>config.php</code></td><td>X-Frame-Options, CSP, X-Content-Type-Options, Referrer-Policy</td></tr>
+<tr><td>Isolation stockage</td><td><code>storage/.htaccess</code></td><td><code>Require all denied</code> — aucun accès web direct</td></tr>
+</table>
+
+<!-- ================================================================= -->
+<!-- ==============  BACKEND DÉTAILLÉ  =============================== -->
+<!-- ================================================================= -->
+
+<h2 id="config" class="anchor">⚙️ <code>config/config.php</code></h2>
+<p><span class="badge badge-php">PHP</span> Point d'entrée de <b>tous</b> les scripts. Il est inclus en tête de chaque fichier et initialise la session, définit les constantes, crée les dossiers, et expose les fonctions utilitaires.</p>
+
+<h3>Constantes définies</h3>
+<table>
+<tr><th>Constante</th><th>Rôle</th></tr>
+<tr><td><code>SECRET_KEY</code></td><td>Clé secrète globale (à régénérer en prod)</td></tr>
+<tr><td><code>ROOT_PATH</code>, <code>STORAGE_PATH</code>, <code>PDF_PATH</code>...</td><td>Chemins absolus dérivés du dossier racine</td></tr>
+<tr><td><code>MAX_PDF_SIZE</code></td><td>10 Mo</td></tr>
+<tr><td><code>ALLOWED_MIME</code></td><td><code>['application/pdf']</code></td></tr>
+<tr><td><code>SESSION_LIFETIME</code></td><td>7 jours pour le PC</td></tr>
+<tr><td><code>TABLET_SESSION_LIFETIME</code></td><td>30 jours pour la tablette</td></tr>
+<tr><td><code>USERS</code></td><td>Tableau des comptes (username → hash + role)</td></tr>
+</table>
+
+<h3>Initialisation session</h3>
+<pre><code>session_set_cookie_params([
+    <span class="str">'lifetime'</span> =&gt; SESSION_LIFETIME,
+    <span class="str">'httponly'</span> =&gt; <span class="kw">true</span>,
+    <span class="str">'samesite'</span> =&gt; <span class="str">'Strict'</span>,
+    <span class="str">'secure'</span>   =&gt; (!empty($_SERVER[<span class="str">'HTTPS'</span>])),
+]);
+ini_set(<span class="str">'session.save_path'</span>, <span class="str">'/raid/signature/storage/php_sessions'</span>);
+session_name(<span class="str">'SIGNAPP_SESSID'</span>);
+session_start();
+</code></pre>
+
+<h3>Fonctions utilitaires</h3>
+
+<h4><code>generate_csrf_token() : string</code></h4>
+<p>Retourne le token CSRF de la session (en crée un si absent, bytes aléatoires hex de 64 caractères). Idempotent : même token pendant toute la session.</p>
+
+<h4><code>verify_csrf_token(?string $token) : bool</code></h4>
+<p>Compare le token reçu avec celui en session via <code>hash_equals()</code> (comparaison à temps constant, résistante au timing attack).</p>
+
+<h4><code>require_role(string $role) : void</code></h4>
+<p>Garde d'accès. Redirige vers <code>/login.php</code> si :</p>
+<ul>
+<li>L'utilisateur n'est pas connecté</li>
+<li>Son rôle ne correspond pas</li>
+<li>Sa session a expiré (durée différente selon rôle)</li>
+</ul>
+
+<h4><code>json_response(array $data, int $code = 200) : void</code></h4>
+<p>Envoie une réponse JSON et termine le script. Sets <code>Content-Type</code> et <code>http_response_code()</code>.</p>
+
+<h4><code>load_document(string $doc_id) : ?array</code></h4>
+<p>Charge un JSON de document avec <b>verrou partagé</b> (LOCK_SH). Retourne <code>null</code> si :</p>
+<ul>
+<li>ID invalide (regex <code>[a-f0-9]</code>, longueur &lt; 16)</li>
+<li>Fichier inexistant</li>
+<li>JSON corrompu</li>
+</ul>
+
+<h4><code>save_document(string $doc_id, array $data) : bool</code></h4>
+<p>Sauvegarde avec <b>verrou exclusif</b> (LOCK_EX). Utilise <code>ftruncate()</code> + <code>rewind()</code> pour réécrire proprement.</p>
+
+<h4><code>get_pending_documents_for_tablet() : array</code></h4>
+<p>Parcourt tous les JSON et retourne ceux dont le statut est <code>waiting_signatures</code> ou <code>signed_by_1</code>. Triés par <code>sent_at</code> décroissant.</p>
+
+<h4><code>get_document_for_tablet(string $doc_id) : ?array</code></h4>
+<p>Charge un doc et retourne sa version "publique" pour la tablette : ajoute <code>url</code> absolue pour chaque page (vers <code>/api/preview.php</code>).</p>
+
+<h4><code>sanitize_name(string $s) : string</code></h4>
+<p>Nettoie un nom : trim, garde lettres Unicode/chiffres/espaces/<code>- . '</code>, max 50 caractères.</p>
+
+<h4><code>cleanup_document_cache(string  $ doc_id) : void</code></h4>
+<p>Supprime les fichiers temporaires d'un document (PDF source, previews PNG, signatures PNG). <b>Garde</b> le JSON et le PDF final.</p>
+
+<h4><code>cleanup_storage() : array</code></h4>
+<p>Fonction principale de nettoyage. Retourne des stats :</p>
+<pre><code>[
+  <span class="str">'cache_cleaned'</span>    =&gt; N,   <span class="com">// nb de docs complétés dont cache a été vidé</span>
+  <span class="str">'expired_deleted'</span>  =&gt; N,   <span class="com">// nb de docs &gt; 30j supprimés</span>
+  <span class="str">'drafts_deleted'</span>   =&gt; N,   <span class="com">// nb de brouillons abandonnés</span>
+  <span class="str">'orphans_deleted'</span>  =&gt; N,   <span class="com">// nb de fichiers sans JSON</span>
+]</code></pre>
+
+<div class="card warn">
+<strong>🎲 Nettoyage opportuniste</strong><br>
+En bas de <code>config.php</code> : <code>if (random_int(1, 20) === 1) cleanup_storage();</code><br>
+→ 1 requête sur 20 déclenche un nettoyage, en plus du cron quotidien.
+</div>
+
+<!-- ================================================================= -->
+<h2 id="router" class="anchor">🚪 Routeur & authentification</h2>
+
+<h3 id="index-router"><code>index.php</code> — Routeur principal</h3>
+<p>Redirige selon le rôle en session :</p>
+<pre><code>if (empty( $ _SESSION[<span class="str">'user'</span>])) header(<span class="str">'Location: /login.php'</span>);
+elseif ( $ role === <span class="str">'pc'</span>)     header(<span class="str">'Location: /pc/index.php'</span>);
+elseif ( $ role === <span class="str">'tablet'</span>) header(<span class="str">'Location: /tablet/index.php'</span>);
+</code></pre>
+
+<h3><code>login.php</code> — Connexion</h3>
+<p>Formulaire HTML + traitement POST :</p>
+<ol>
+<li>Vérifie le token CSRF</li>
+<li>Cherche le user dans <code>USERS</code></li>
+<li>Vérifie avec <code>password_verify()</code></li>
+<li>En cas de succès : <code>session_regenerate_id(true)</code> + création <code> $ _SESSION['user']</code> + redirection</li>
+<li>En cas d'échec : délai de 0.5 s (anti-brute-force)</li>
+</ol>
+
+<h3><code>logout.php</code></h3>
+<p>Vide <code> $ _SESSION</code>, efface le cookie, détruit la session, redirige vers login.</p>
+
+<!-- ================================================================= -->
+<h2 id="api-upload" class="anchor">📤 <code>api/upload.php</code></h2>
+<p><span class="badge badge-post">POST</span> <span class="badge badge-auth">auth: pc</span> — Upload d'un PDF + création du document.</p>
+
+<h3>Paramètres (multipart/form-data)</h3>
+<table>
+<tr><th>Champ</th><th>Type</th><th>Requis</th></tr>
+<tr><td><code>csrf_token</code></td><td>string</td><td>✓</td></tr>
+<tr><td><code>pdf</code></td><td>file</td><td>✓ (PDF, ≤10 Mo)</td></tr>
+<tr><td><code>p1_firstname</code>, <code>p1_lastname</code></td><td>string</td><td>✓</td></tr>
+<tr><td><code>p2_firstname</code>, <code>p2_lastname</code></td><td>string</td><td>✓</td></tr>
+</table>
+
+<h3>Étapes</h3>
+<ol>
+<li><b>Validations</b> : méthode POST, CSRF, fichier reçu, taille, MIME, magic bytes <code>%PDF-</code>, noms sanitizés non vides.</li>
+<li><b>Génération ID</b> : <code>bin2hex(random_bytes(16))</code> → 32 chars hex.</li>
+<li><b>Déplacement fichier</b> : <code>move_uploaded_file()</code> vers <code>storage/pdf/{doc_id}.pdf</code>.</li>
+<li><b>Conversion PDF→PNG</b> :
+<ul>
+<li>Lecture du nombre de pages avec <code>pdfinfo</code> (regex <code>Pages:\s+(\d+)</code>)</li>
+<li>Conversion via Ghostscript en une seule commande (rendu 120 dpi, device <code>png16m</code>)</li>
+<li>Vérification que chaque page a bien été générée</li>
+</ul>
+</li>
+<li><b>Création du JSON</b> avec statut <code>draft</code>.</li>
+<li><b>Réponse</b> : <code>{success, doc_id, pages: [{num, width, height, url}], p1_label, p2_label}</code></li>
+</ol>
+
+<div class="card warn">
+<strong>Pourquoi Ghostscript direct plutôt qu'Imagick ?</strong><br>
+Plus rapide, moins de mémoire, pas besoin de policy.xml d'Imagick (qui bloque souvent les PDF par défaut pour des raisons de sécurité). Un seul appel système convertit toutes les pages d'un coup.
+</div>
+
+<pre><code><span class="com">// Commande Ghostscript utilisée</span>
+gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=png16m -r120 \
+   -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
+   -sOutputFile=storage/previews/{doc_id}/page_%d.png \
+   storage/pdf/{doc_id}.pdf
+</code></pre>
+
+<!-- ================================================================= -->
+<h2 id="api-preview" class="anchor">🖼️ <code>api/preview.php</code></h2>
+<p><span class="badge badge-get">GET</span> <span class="badge badge-auth">auth: any</span> — Sert une image de prévisualisation.</p>
+
+<h3>Paramètres</h3>
+<pre><code>/api/preview.php?doc_id={32chars}&page={1-200}</code></pre>
+
+<h3>Logique</h3>
+<ol>
+<li>Vérifie la session (n'importe quel rôle connecté)</li>
+<li>Valide l'ID (regex hex) et le numéro de page (1-200)</li>
+<li>Lit <code>storage/previews/{doc_id}/page_{N}.png</code></li>
+<li>Envoie avec <code>Content-Type: image/png</code> et cache privé 1h</li>
+</ol>
+
+<div class="card info">
+<strong>Pourquoi ce proxy ?</strong><br>
+Le dossier <code>storage/</code> est bloqué par <code>.htaccess</code> → inaccessible en direct. Ce script vérifie l'authentification avant de servir l'image.
+</div>
+
+<!-- ================================================================= -->
+<h2 id="api-set-zones" class="anchor">📐 <code>api/set_zones.php</code></h2>
+<p><span class="badge badge-post">POST</span> <span class="badge badge-auth">auth: pc</span> — Enregistre les zones de signature pour un document.</p>
+
+<h3>Body JSON</h3>
+<pre><code>{
+  <span class="str">"csrf_token"</span>: <span class="str">"..."</span>,
+  <span class="str">"doc_id"</span>:     <span class="str">"..."</span>,
+  <span class="str">"zones"</span>: [
+    { <span class="str">"person"</span>: 1, <span class="str">"page"</span>: 1, <span class="str">"rel_x"</span>: 0.1, <span class="str">"rel_y"</span>: 0.8,
+      <span class="str">"rel_w"</span>: 0.2, <span class="str">"rel_h"</span>: 0.07 },
+    { <span class="str">"person"</span>: 2, <span class="str">"page"</span>: 1, <span class="str">"rel_x"</span>: 0.6, ... }
+  ]
+}</code></pre>
+
+<h3>Validations</h3>
+<ul>
+<li>Document existe et est en statut <code>draft</code></li>
+<li>1 à 20 zones</li>
+<li>Chaque zone : <code>person ∈ {1,2}</code>, <code>page ∈ [1, nb_pages]</code>, coords <code>∈ [0,1]</code></li>
+<li><b>Au moins une zone pour chaque personne</b> (P1 et P2)</li>
+</ul>
+
+<p>Après validation → <code>status = 'zones_placed'</code>.</p>
+
+<!-- ================================================================= -->
+<h2 id="api-send" class="anchor">📲 <code>api/send_to_tablet.php</code></h2>
+<p><span class="badge badge-post">POST</span> <span class="badge badge-auth">auth: pc</span> — Bascule un document en "en attente sur la tablette".</p>
+
+<h3>Body JSON</h3>
+<pre><code>{ <span class="str">"csrf_token"</span>: <span class="str">"..."</span>, <span class="str">"doc_id"</span>: <span class="str">"..."</span> }</code></pre>
+
+<h3>Effets</h3>
+<ul>
+<li>Vérifie <code>status === 'zones_placed'</code> et présence de zones</li>
+<li>Passe <code>status = 'waiting_signatures'</code></li>
+<li>Enregistre <code>sent_at = time()</code></li>
+</ul>
+
+<!-- ================================================================= -->
+<h2 id="api-status" class="anchor">🔄 <code>api/status.php</code></h2>
+<p><span class="badge badge-get">GET</span> <span class="badge badge-auth">auth: any</span> — Endpoint de polling multi-modes.</p>
+
+<h3>Mode 1 : PC — suivi d'un doc</h3>
+<pre><code>GET /api/status.php?doc_id={32chars}
+
+<span class="com">// Réponse</span>
+{ <span class="str">"success"</span>: <span class="kw">true</span>, <span class="str">"doc_id"</span>: ..., <span class="str">"status"</span>: ...,
+  <span class="str">"signed_1"</span>: <span class="kw">false</span>, <span class="str">"signed_2"</span>: <span class="kw">false</span>,
+  <span class="str">"p1_label"</span>: ..., <span class="str">"p2_label"</span>: ...,
+  <span class="str">"original_filename"</span>: ... }</code></pre>
+
+<h3>Mode 2 : Tablette — liste</h3>
+<pre><code>GET /api/status.php?list=1
+
+<span class="com">// Réponse</span>
+{ <span class="str">"success"</span>: <span class="kw">true</span>,
+  <span class="str">"documents"</span>: [ {doc_id, status, p1_label, p2_label,
+                 original_filename, sent_at, signed_1, signed_2}, ... ] }</code></pre>
+
+<h3>Mode 3 : Tablette — détail</h3>
+<pre><code>GET /api/status.php?doc_id={32chars}
+
+<span class="com">// Réponse (inclut pages + urls + zones pour l'affichage)</span>
+{ <span class="str">"success"</span>: <span class="kw">true</span>,
+  <span class="str">"document"</span>: { doc_id, status, p1_label, p2_label,
+                pages: [{num, width, height, url}],
+                zones: [...],
+                signed_1, signed_2 } }</code></pre>
+
+<!-- ================================================================= -->
+<h2 id="api-sign" class="anchor">✍️ <code>api/sign.php</code></h2>
+<p><span class="badge badge-post">POST</span> <span class="badge badge-auth">auth: tablet</span> — Reçoit une signature et, si les deux sont présentes, génère le PDF final.</p>
+
+<h3>Body JSON</h3>
+<pre><code>{
+  <span class="str">"csrf_token"</span>: <span class="str">"..."</span>,
+  <span class="str">"doc_id"</span>: <span class="str">"..."</span>,
+  <span class="str">"person"</span>: 1,                    <span class="com">// ou 2</span>
+  <span class="str">"signature"</span>: <span class="str">"data:image/png;base64,iVBORw0KG..."</span>
+}</code></pre>
+
+<h3>Validations de la signature</h3>
+<ol>
+<li>Regex du data URI : <code>^data:image/png;base64,(...)$</code></li>
+<li>Décodage base64 strict</li>
+<li>Taille binaire entre 100 octets et 2 Mo</li>
+<li>Magic bytes PNG : <code>\x89PNG\r\n\x1a\n</code></li>
+</ol>
+
+<h3>Logique principale</h3>
+<pre><code><span class="com">// Sauvegarde PNG</span>
+$sig_file = SIGNATURES_PATH . <span class="str">'/'</span> . $doc_id . <span class="str">'_p'</span> .  $ person . <span class="str">'.png'</span>;
+file_put_contents( $ sig_file, $bin);
+
+<span class="com">// MAJ document</span>
+ $ doc[<span class="str">'signed_'</span>. $ person] = <span class="kw">true</span>;
+ $ doc[<span class="str">'signature_'</span>. $ person.<span class="str">'_file'</span>] = basename( $ sig_file);
+
+<span class="com">// Transition statut</span>
+<span class="kw">if</span> ( $ doc[<span class="str">'signed_1'</span>] && $doc[<span class="str">'signed_2'</span>]) {
+     $ final = generate_final_pdf( $ doc);
+    $doc[<span class="str">'status'</span>]       = <span class="str">'completed'</span>;
+    $doc[<span class="str">'completed_at'</span>] = time();
+     $ doc[<span class="str">'final_pdf'</span>]    = basename( $ final);
+}
+<span class="kw">elseif</span> ($doc[<span class="str">'signed_1'</span>]) $doc[<span class="str">'status'</span>] = <span class="str">'signed_by_1'</span>;</code></pre>
+
+<h3>Fonction <code>generate_final_pdf(array  $ doc) : ?string</code></h3>
+<p>Cœur de la génération PDF. Utilise TCPDF + FPDI :</p>
+
+<ol>
+<li><b>Décompression du PDF source</b> via Ghostscript vers un fichier temp en PDF 1.4 :
+<pre><code>gs -dCompatibilityLevel=1.4 -sDEVICE=pdfwrite \
+   -sOutputFile=/tmp/fpdi_{id}.pdf {src.pdf}</code></pre>
+→ FPDI ne supporte pas les PDF 1.5+ avec <i>object streams</i>. Cette étape rend le PDF importable.
+</li>
+<li><b>Import page par page</b> avec <code>setSourceFile</code> + <code>importPage</code> + <code>useTemplate</code></li>
+<li><b>Pour chaque zone</b> : calcul des coordonnées absolues (<code>rel_x * page_width</code>), insertion du PNG de signature avec <code> $ pdf->Image()</code>, puis petit label "Signé : XXX" sous la zone</li>
+<li><b>Sauvegarde</b> dans <code>storage/final/{doc_id}_signed.pdf</code></li>
+<li>Nettoyage du fichier temp</li>
+</ol>
+
+<div class="card danger">
+<strong>⚠️ Piège connu</strong><br>
+Si le PDF source contient des <i>object streams</i> (PDF 1.5+) ou est chiffré, FPDI lève une exception. D'où l'étape préalable avec Ghostscript qui convertit en PDF 1.4 simple. En cas d'échec de la décompression, on retombe sur le PDF original en fallback (mais ça peut planter plus loin).
+</div>
+<!-- ================================================================= -->
+<h2 id="api-download" class="anchor">⬇️ <code>api/download.php</code></h2>
+<p><span class="badge badge-get">GET</span> <span class="badge badge-auth">auth: pc</span> — Téléchargement du PDF final signé.</p>
+
+<h3>URL</h3>
+<pre><code>GET /api/download.php?doc_id={32chars}</code></pre>
+
+<h3>Logique</h3>
+<ol>
+<li>Valide l'ID (regex hex, longueur 32)</li>
+<li>Charge le document, vérifie <code>status === 'completed'</code> et présence de <code>final_pdf</code></li>
+<li>Marque <code>downloaded_at</code> (si pas déjà fait) → déclenche le nettoyage de cache au prochain <code>cleanup_storage()</code></li>
+<li>Envoie le fichier avec <code>Content-Disposition: attachment</code> et un nom propre : <code>signe_{nom_original}.pdf</code></li>
+</ol>
+
+<pre><code>$filename = <span class="str">'signe_'</span> . preg_replace(<span class="str">'/[^A-Za-z0-9_\-]/'</span>, <span class="str">'_'</span>,
+            pathinfo($doc[<span class="str">'original_filename'</span>], PATHINFO_FILENAME)) . <span class="str">'.pdf'</span>;
+header(<span class="str">'Content-Disposition: attachment; filename="'</span> . $filename . <span class="str">'"'</span>);
+readfile($file);</code></pre>
+
+<!-- ================================================================= -->
+<h2 id="cleanup" class="anchor">🧹 <code>cleanup.php</code></h2>
+<p><span class="badge badge-php">CLI</span> — Script lancé par cron pour le nettoyage périodique.</p>
+
+<pre><code>require_once __DIR__ . <span class="str">'/config/config.php'</span>;
+$stats = cleanup_storage();
+echo date(<span class="str">'[Y-m-d H:i:s] '</span>) . json_encode($stats) . PHP_EOL;</code></pre>
+
+<h3>Configuration cron recommandée</h3>
+<pre><code><span class="com"># crontab de www-data : tous les jours à 3h du matin</span>
+0 3 * * * /usr/bin/php /raid/signature/cleanup.php &gt;&gt; /var/log/signature_cleanup.log 2&gt;&amp;1
+</code></pre>
+
+<!-- ================================================================= -->
+<!-- ==============  FRONTEND DÉTAILLÉ  =============================== -->
+<!-- ================================================================= -->
+
+<h2 id="pc-view" class="anchor">🖥️ <code>pc/index.php</code> — Vue gestionnaire</h2>
+<p><span class="badge badge-html">HTML</span> <span class="badge badge-auth">auth: pc</span></p>
+
+<h3>Structure</h3>
+<p>Page avec 3 sections affichées/masquées dynamiquement via la classe <code>.hidden</code> :</p>
+<ul>
+<li><b>#step-upload</b> : formulaire d'upload (PDF + noms des 2 signataires)</li>
+<li><b>#step-zones</b> : sélecteur de personne + pages PDF cliquables pour poser les zones</li>
+<li><b>#step-tracking</b> : liste des documents envoyés en cours de signature</li>
+</ul>
+
+<h3>Éléments clés</h3>
+<pre><code><span class="com">&lt;!-- CSRF transmis au JS via meta --&gt;</span>
+&lt;<span class="kw">meta</span> <span class="fn">name</span>=<span class="str">"csrf-token"</span> <span class="fn">content</span>=<span class="str">"&lt;?= htmlspecialchars($csrf) ?&gt;"</span>&gt;
+
+<span class="com">&lt;!-- Sélecteur de personne active --&gt;</span>
+&lt;<span class="kw">button</span> <span class="fn">class</span>=<span class="str">"person-btn active"</span> <span class="fn">data-person</span>=<span class="str">"1"</span>&gt;
+    ✍️ &lt;<span class="kw">span</span> <span class="fn">id</span>=<span class="str">"label-p1"</span>&gt;Personne 1&lt;/<span class="kw">span</span>&gt;
+&lt;/<span class="kw">button</span>&gt;
+
+<span class="com">&lt;!-- Pages PDF injectées par JS --&gt;</span>
+&lt;<span class="kw">div</span> <span class="fn">id</span>=<span class="str">"pdf-pages"</span>&gt;&lt;/<span class="kw">div</span>&gt;</code></pre>
+
+<!-- ================================================================= -->
+<h2 id="tablet-view" class="anchor">📱 <code>tablet/index.php</code> — Vue tablette</h2>
+<p><span class="badge badge-html">HTML</span> <span class="badge badge-auth">auth: tablet</span></p>
+
+<h3>Trois écrans superposés</h3>
+<table>
+<tr><th>ID</th><th>Rôle</th></tr>
+<tr><td><code>#list-screen</code></td><td>Liste des documents à signer (écran par défaut)</td></tr>
+<tr><td><code>#reading-screen</code></td><td>Lecture du PDF page par page avec zoom avant signature</td></tr>
+<tr><td><code>#document-screen</code></td><td>Écran de signature (zones mises en évidence + canvas)</td></tr>
+</table>
+
+<h3>Éléments critiques</h3>
+<ul>
+<li><b>Viewport no-zoom</b> : <code>maximum-scale=1, user-scalable=no</code> pour éviter le zoom accidentel pendant la signature</li>
+<li><b>Canvas de signature</b> : <code>&lt;canvas id="signature-canvas"&gt;</code> avec <code>touch-action: none</code> pour capturer les événements tactiles</li>
+<li><b>Toast</b> : <code>#toast</code> pour feedback visuel des actions</li>
+<li><b>CSRF + scripts</b> chargés en bas de page</li>
+</ul>
+
+<!-- ================================================================= -->
+<h2 id="pc-js" class="anchor">📜 <code>assets/js/pc.js</code></h2>
+<p><span class="badge badge-js">JS</span> IIFE <code>(function() { ... })()</code> pour isoler les variables. Gère tout le workflow PC.</p>
+
+<h3>État central <code>state</code></h3>
+<pre><code>const state = {
+    docId: <span class="kw">null</span>,          <span class="com">// doc en cours de préparation</span>
+    pages: [],              <span class="com">// pages du doc courant (depuis l'upload)</span>
+    zones: [],              <span class="com">// zones placées en mémoire</span>
+    activePerson: 1,        <span class="com">// personne active dans le sélecteur</span>
+    personLabels: {},       <span class="com">// {1: 'Jean Dupont', 2: 'Marie Martin'}</span>
+    trackedDocs: {},        <span class="com">// docs envoyés à la tablette (suivi)</span>
+    pollTimer: <span class="kw">null</span>,      <span class="com">// handle du setInterval</span>
+};</code></pre>
+
+<h3>Fonctions principales</h3>
+
+<h4><code>upload-form submit</code> (handler)</h4>
+<p>Envoie le <code>FormData</code> à <code>/api/upload.php</code>. En cas de succès, charge les pages, affiche l'étape 2, cache l'étape 1.</p>
+
+<h4><code>renderPages()</code></h4>
+<p>Crée dynamiquement les <code>&lt;img&gt;</code> de chaque page dans <code>#pdf-pages</code>, attache un <code>click</code> handler à chacune.</p>
+
+<h4><code>onPageClick(e, pageNum, container, img)</code></h4>
+<p>Calcule les coordonnées relatives du clic :</p>
+<pre><code><span class="kw">const</span> rect = img.getBoundingClientRect();
+<span class="kw">const</span> relX = (e.clientX - rect.left) / rect.width;
+<span class="kw">const</span> relY = (e.clientY - rect.top) / rect.height;</code></pre>
+<p>Supprime l'ancienne zone de la personne active, ajoute la nouvelle, redessine.</p>
+
+<h4><code>redrawZones()</code></h4>
+<p>Nettoie toutes les <code>.sig-zone</code> du DOM et les recrée en positionnement absolu (pourcentages CSS).</p>
+
+<h4><code>checkZonesComplete()</code></h4>
+<p>Active le bouton "Envoyer à la tablette" <b>uniquement</b> si au moins une zone existe pour chaque personne (P1 et P2).</p>
+
+<h4><code>#btn-send-tablet click</code></h4>
+<p>Enchaîne 2 appels API :</p>
+<ol>
+<li><code>POST /api/set_zones.php</code> (envoie le tableau de zones)</li>
+<li><code>POST /api/send_to_tablet.php</code> (bascule en <code>waiting_signatures</code>)</li>
+</ol>
+<p>Puis ajoute le doc à <code>state.trackedDocs</code>, réinitialise le formulaire, et lance le polling.</p>
+
+<h4><code>renderTracking()</code></h4>
+<p>Reconstruit la liste HTML des documents suivis dans <code>#tracking-list</code>. Pour chaque doc : titre, statut (waiting/pending/success), progression des 2 signataires, et bouton de téléchargement si complété.</p>
+
+<h4><code>startPolling()</code> / <code>pollAll()</code></h4>
+<p>Toutes les 3 secondes, pour chaque doc non complété, appelle <code>GET /api/status.php?doc_id=...</code> et met à jour l'état. Puis redessine la liste.</p>
+
+<div class="card info">
+<strong>💡 Pattern</strong><br>
+Le PC peut préparer un nouveau document pendant que des anciens attendent des signatures. Le polling continue tant qu'il reste des docs non complétés.
+</div>
+
+<!-- ================================================================= -->
+<h2 id="tablet-js" class="anchor">📜 <code>assets/js/tablet.js</code></h2>
+<p><span class="badge badge-js">JS</span> IIFE — Logique complète de la tablette.</p>
+
+<h3>État central</h3>
+<pre><code>const state = {
+    currentDocId:      <span class="kw">null</span>,    <span class="com">// doc en cours de consultation/signature</span>
+    currentDocData:    <span class="kw">null</span>,    <span class="com">// données complètes du doc</span>
+    readingPage:       1,       <span class="com">// page affichée en lecture</span>
+    readingTotalPages: 1,
+    readingZoom:       1,       <span class="com">// facteur de zoom (0.5 à 3)</span>
+    sigInstance:       <span class="kw">null</span>,    <span class="com">// instance du module SignatureCanvas</span>
+    activeZone:        <span class="kw">null</span>,    <span class="com">// personne qui doit signer (1 ou 2)</span>
+    pollTimer:         <span class="kw">null</span>,
+    lockUntil:         0,       <span class="com">// timestamp : bloque le polling pendant un envoi</span>
+    mode:              <span class="str">'list'</span>,
+};</code></pre>
+
+<h3>Fonctions clés</h3>
+
+<h4><code>showScreen(name)</code></h4>
+<p>Bascule entre les 3 écrans en jouant sur la classe <code>.hidden</code> :</p>
+<pre><code>listScreen.classList.toggle(<span class="str">'hidden'</span>, name !== <span class="str">'list'</span>);
+readingScreen.classList.toggle(<span class="str">'hidden'</span>, name !== <span class="str">'reading'</span>);
+docScreen.classList.toggle(<span class="str">'hidden'</span>, name !== <span class="str">'document'</span>);</code></pre>
+
+<h4><code>refreshList()</code></h4>
+<p><code>GET /api/status.php?list=1</code>, récupère les docs en attente, appelle <code>renderList()</code>.</p>
+
+<h4><code>renderList(docs)</code></h4>
+<p>Construit les cartes de documents avec : nom du fichier, date d'envoi formatée, chips des 2 signataires (barré si signé), flèche d'action. Chaque carte a un <code>click</code> qui appelle <code>openDocument(doc_id)</code>.</p>
+
+<h4><code>openDocument(docId)</code></h4>
+<p><code>GET /api/status.php?doc_id=...</code>, stocke les données, puis <code>openReadingScreen()</code>.</p>
+
+<h4><code>openReadingScreen(doc)</code> / <code>renderReadingPage()</code></h4>
+<p>Affiche la page courante dans <code>#reading-page-img</code>. Met à jour les indicateurs "Page X / Y" et l'état des boutons Précédent/Suivant.</p>
+
+<h4>Contrôles de zoom</h4>
+<pre><code><span class="com">// Zoom par transform CSS</span>
+readingWrapper.style.transform = <span class="str">`scale(${state.readingZoom})`</span>;
+
+<span class="com">// Double-tap pour zoomer</span>
+readingImg.addEventListener(<span class="str">'click'</span>, () =&gt; {
+    <span class="kw">const</span> now = Date.now();
+    <span class="kw">if</span> (now - lastTap &lt; 300) {
+        state.readingZoom = state.readingZoom === 1 ? 2 : 1;
+        applyZoom();
+    }
+    lastTap = now;
+});</code></pre>
+
+<h4><code>#btn-start-signing click</code></h4>
+<p>Passe de l'écran de lecture à l'écran de signature : <code>renderDocument()</code> + <code>updateSignerPanel()</code>.</p>
+
+<h4><code>renderDocument(doc)</code></h4>
+<p>Construit toutes les pages du doc avec les zones en surimpression (positionnées en pourcentages relatifs). Les zones ont un <code>data-person</code> pour identifier le signataire.</p>
+
+<h4><code>updateSignerPanel(doc)</code></h4>
+<p>Détermine qui doit signer :</p>
+<ul>
+<li>Si P1 pas signé → P1 signe</li>
+<li>Sinon si P2 pas signé → P2 signe</li>
+<li>Sinon tout est fait, panneau caché</li>
+</ul>
+<p>Met à jour la bannière et le titre avec le nom du signataire actif, et force le <code>resize()</code> du canvas via <code>requestAnimationFrame</code> (double RAF pour s'assurer que le DOM est peint avant le calcul de la taille).</p>
+
+<h4><code>#btn-validate click</code></h4>
+<p>Workflow complet de validation :</p>
+<ol>
+<li>Vérifie que le canvas n'est pas vide (<code>sigInstance.isEmpty()</code>)</li>
+<li>Désactive le bouton, affiche "Envoi..."</li>
+<li>Positionne <code>lockUntil</code> à +5s pour bloquer le polling pendant la requête</li>
+<li>Convertit la signature en base64 via <code>sigInstance.toBase64()</code></li>
+<li><code>POST /api/sign.php</code> avec <code>{csrf_token, doc_id, person, signature}</code></li>
+<li>En succès : toast "Signature enregistrée ✓" + retour à la liste (<code>returnToList()</code>)</li>
+<li>En erreur : alert + réactivation du bouton</li>
+</ol>
+
+<h4><code>returnToList()</code></h4>
+<p>Réinitialise l'état, cache le panneau de signature, vide le conteneur, bascule sur l'écran liste et force un refresh immédiat.</p>
+
+<h4><code>startPoll()</code></h4>
+<p>Polling toutes les 3s. Saute si <code>lockUntil</code> est actif. Ne refresh que si on est en mode <code>list</code> (on ne perturbe pas l'utilisateur en train de signer).</p>
+
+<!-- ================================================================= -->
+<h2 id="sig-canvas" class="anchor">🖊️ <code>assets/js/signature_canvas.js</code></h2>
+<p><span class="badge badge-js">JS</span> Module autonome <code>window.SignatureCanvas</code> exposant <code>create(canvas)</code>.</p>
+
+<h3>API publique</h3>
+<pre><code><span class="kw">const</span> sig = SignatureCanvas.create(canvasElement);
+
+sig.clear();       <span class="com">// efface le dessin</span>
+sig.resize();      <span class="com">// recalcule les dimensions (après layout change)</span>
+sig.isEmpty();     <span class="com">// true si rien n'a été dessiné</span>
+sig.toBase64();    <span class="com">// renvoie la signature en PNG base64, fond transparent</span>
+sig.disable();     <span class="com">// désactive les interactions (read-only)</span></code></pre>
+
+<h3>Gestion du HiDPI et du redimensionnement</h3>
+<p>Le canvas a deux tailles distinctes :</p>
+<ul>
+<li><b>Taille CSS</b> (ce qu'on voit) : imposée par le layout</li>
+<li><b>Taille buffer</b> (résolution réelle) : multipliée par <code>devicePixelRatio</code> pour un rendu net</li>
+</ul>
+
+<pre><code><span class="kw">function</span> <span class="fn">resize</span>() {
+    <span class="com">// Sauvegarde du dessin courant</span>
+    <span class="kw">const</span> prev = hasContent ? canvas.toDataURL() : <span class="kw">null</span>;
+
+    <span class="kw">const</span> rect = canvas.getBoundingClientRect();
+    <span class="kw">const</span> dpr  = window.devicePixelRatio || 1;
+
+    canvas.style.width  = rect.width + <span class="str">'px'</span>;
+    canvas.style.height = rect.height + <span class="str">'px'</span>;
+    canvas.width  = Math.round(rect.width  * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+
+    <span class="com">// Scale pour dessiner en coordonnées CSS</span>
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    <span class="com">// Fond ivoire + style de trait</span>
+    ctx.fillStyle = <span class="str">'#fffdf5'</span>;
+    ctx.fillRect(0, 0, rect.width, rect.height);
+    ctx.strokeStyle = <span class="str">'#111'</span>;
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = <span class="str">'round'</span>;
+    ctx.lineJoin = <span class="str">'round'</span>;
+
+    <span class="com">// Restauration du dessin précédent</span>
+    <span class="kw">if</span> (prev) {
+        <span class="kw">const</span> img = <span class="kw">new</span> Image();
+        img.onload = () =&gt; ctx.drawImage(img, 0, 0, rect.width, rect.height);
+        img.src = prev;
+    }
+}</code></pre>
+
+<h3>Événements tactiles/souris</h3>
+<p>Les 3 handlers <code>start/move/end</code> sont branchés sur <code>mouse*</code> ET <code>touch*</code> avec <code>{ passive: false }</code> pour pouvoir faire <code>preventDefault()</code> et empêcher le scroll pendant le dessin.</p>
+
+<h3>Export transparent <code>toBase64()</code></h3>
+<p>Astuce pour avoir un PNG à fond transparent :</p>
+<ol>
+<li>Copie l'image dans un canvas temporaire</li>
+<li>Parcourt tous les pixels</li>
+<li>Si un pixel est "presque ivoire" (<code>r&gt;240 && g&gt;235 && b&gt;220</code>), met son alpha à 0</li>
+<li>Exporte en <code>data:image/png;base64,...</code></li>
+</ol>
+
+<div class="card warn">
+<strong>Limitation</strong><br>
+Ce filtre peut aussi rendre transparents des traits très clairs. Pour une vraie signature au stylo noir, ça marche bien. Si tu veux des traits colorés, il faudrait travailler sur un canvas à fond déjà transparent dès le départ.
+</div>
+
+<!-- ================================================================= -->
+<!-- ==============  DIAGRAMMES  ===================================== -->
+<!-- ================================================================= -->
+
+<h2 id="sequence" class="anchor">📊 Diagrammes de séquence</h2>
+
+<h3>Scénario 1 : Création d'un document (PC)</h3>
+<pre><code>PC                          Serveur                       Storage
+│                           │                             │
+│── POST /api/upload.php ──&gt;│                             │
+│   (PDF + noms)            │── move_uploaded_file() ────&gt;│ pdf/{id}.pdf
+│                           │── exec pdfinfo ────────────&gt;│
+│                           │── exec ghostscript ────────&gt;│ previews/{id}/*.png
+│                           │── save_document() ─────────&gt;│ sessions/{id}.json
+│&lt;── {success, doc_id, pages}│                            │
+│                           │                             │
+│ [L'utilisateur clique sur les pages pour placer les zones]
+│                           │                             │
+│── POST /api/set_zones.php ─&gt;│                            │
+│   (zones JSON)            │── valide coords ────────────│
+│                           │── status=zones_placed ─────&gt;│ sessions/{id}.json
+│&lt;── {success}              │                             │
+│                           │                             │
+│── POST /api/send_to_tablet │                             │
+│&lt;── {success}              │── status=waiting_signatures─&gt;│
+│                           │                             │
+│ [Polling toutes les 3s : GET /api/status.php?doc_id=...]</code></pre>
+
+<h3>Scénario 2 : Signature (tablette)</h3>
+<pre><code>Tablette                    Serveur                       Storage
+│                           │                             │
+│── GET /api/status.php?list=1─&gt;                          │
+│&lt;── {documents: [...]}     │                             │
+│                           │                             │
+│ [Utilisateur choisit un doc]
+│── GET /api/status.php?doc_id=X ─&gt;                       │
+│&lt;── {document: {pages, zones, ...}}                      │
+│                           │                             │
+│ [Lecture puis signature]
+│── POST /api/sign.php ────&gt;│                             │
+│   (base64 PNG)            │── valide PNG ────────────────│
+│                           │── save PNG ─────────────────&gt;│ signatures/{id}_p1.png
+│                           │── status=signed_by_1 ───────&gt;│ sessions/{id}.json
+│&lt;── {success}              │                             │
+│                           │                             │
+│ [Retour à la liste, attente 2e signataire]
+│                           │                             │
+│── POST /api/sign.php ────&gt;│                             │
+│   (base64 PNG P2)         │── save PNG ─────────────────&gt;│ signatures/{id}_p2.png
+│                           │── generate_final_pdf() :    │
+│                           │   exec gs (decompress) ─────&gt;│ /tmp/fpdi_X.pdf
+│                           │   TCPDF+FPDI import pages   │
+│                           │   incruste signatures       │
+│                           │   save PDF ─────────────────&gt;│ final/{id}_signed.pdf
+│                           │── status=completed ─────────&gt;│ sessions/{id}.json
+│&lt;── {success}              │                             │
+│                           │                             │
+│ [PC voit "completed" → clique "Télécharger"]
+│                           │&lt;── GET /api/download.php ───── PC
+│                           │── mark downloaded_at ───────&gt;│
+│                           │── readfile() ────────────────&gt; PC
+│                           │                             │
+│ [Cron ou requête opportuniste]
+│                           │── cleanup_storage() :       │
+│                           │   cache cleaned ────────────&gt;│ supprime pdf+previews+signatures</code></pre>
+
+<!-- ================================================================= -->
+<h2 id="troubleshoot" class="anchor">🔧 Dépannage courant</h2>
+
+<h3>Erreurs PDF</h3>
+<table>
+<tr><th>Symptôme</th><th>Cause probable</th><th>Solution</th></tr>
+<tr>
+  <td>"Impossible de convertir le PDF en images"</td>
+  <td>Ghostscript ou pdfinfo manquant</td>
+  <td><code>apt install ghostscript poppler-utils</code></td>
+</tr>
+<tr>
+  <td>Erreur FPDI "object streams"</td>
+  <td>PDF 1.5+ avec compression avancée</td>
+  <td>L'étape gs decompress le gère. Si elle échoue, vérifier les permissions de <code>sys_get_temp_dir()</code></td>
+</tr>
+<tr>
+  <td>PDF final sans les signatures</td>
+  <td>PNG manquants ou chemins incorrects</td>
+  <td>Vérifier <code>storage/signatures/{id}_p1.png</code> et <code>_p2.png</code></td>
+</tr>
+</table>
+
+<h3>Erreurs sessions</h3>
+<table>
+<tr><th>Symptôme</th><th>Solution</th></tr>
+<tr>
+  <td>Déconnexion constante de la tablette</td>
+  <td>Vérifier <code>session.gc_maxlifetime</code> côté PHP et les perms de <code>storage/php_sessions/</code></td>
+</tr>
+<tr>
+  <td>CSRF invalide</td>
+  <td>Vider les cookies, recharger la page pour obtenir un nouveau token</td>
+</tr>
+</table>
+
+<h3>Commandes utiles</h3>
+<pre><code><span class="com"># Voir les logs PHP en live</span>
+tail -f /var/log/php8.2-fpm.log
+tail -f /var/log/nginx/error.log
+
+<span class="com"># Lister les documents en cours</span>
+ls -la /raid/signature/storage/sessions/
+
+<span class="com"># Voir l'état d'un document</span>
+cat /raid/signature/storage/sessions/{doc_id}.json | jq
+
+<span class="com"># Lancer manuellement le nettoyage</span>
+sudo -u www-data php /raid/signature/cleanup.php
+
+<span class="com"># Vérifier les perms</span>
+sudo -u www-data touch /raid/signature/storage/final/test.txt && echo OK
+
+<span class="com"># Régénérer un hash de mot de passe</span>
+php -r 'echo password_hash("monmotdepasse", PASSWORD_BCRYPT), "\n";'
+</code></pre>
+
+<hr style="margin-top: 60px; border: none; border-top: 1px solid var(--border);">
+<p style="text-align: center; color: var(--muted); font-size: 13px; margin-top: 30px;">
+  Documentation générée pour l'application Signature Électronique — version actuelle<br>
+  📄 Garder ce fichier à jour après chaque modification majeure du code
+</p>
+
+</main>
+</div>
+
+<script>
+// Petit JS pour highlight actif dans la sidebar au scroll
+const sections = document.querySelectorAll('main h1[id], main h2[id]');
+const navLinks = document.querySelectorAll('aside nav a');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(s => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top <= 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.background = a.getAttribute('href') === '#' + current ? '#30363d' : '';
+    a.style.color = a.getAttribute('href') === '#' + current ? '#fff' : '';
+  });
+}
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
+</script>
+
+</body>
+</html>
